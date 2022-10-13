@@ -36,9 +36,9 @@ export function USER_POST(body) {
     url: `${API_URL}/api/user`,
     options: {
       method: "POST",
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body) 
     },
-    body: JSON.stringify(body)
   }
 }
 
@@ -47,8 +47,86 @@ export function PHOTO_POST(token, formData) {
     url: `${API_URL}/api/photo`,
     options: {
       method: "POST",
-      headers: { Authorization: `Bearer ${token}` }
+      headers: { Authorization: `Bearer ${token}` },
+      body: formData
     },
-    body: formData
+  }
+}
+
+export function PHOTOS_GET({page, total, user}) {
+  return {
+    url: `${API_URL}/api/photo/?_total=${total}&_page=${page}&_user=${user}`,
+    options: {
+      method: "GET",
+      cache: 'no-store'
+    }
+  }
+}
+
+export function PHOTO_GET(id) {
+  return {
+    url: `${API_URL}/api/photo/${id}`
+  }
+}
+
+export function COMMENT_POST(id, token, body) {
+  return {
+    url: `${API_URL}/api/comment/${id}`,
+    options: {
+      method: "POST",
+      headers: { 
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token, 
+      },
+      body: JSON.stringify(body)
+    },
+  }
+}
+
+export function PHOTO_DELETE(id, token) {
+  return {
+    url: `${API_URL}/api/photo/${id}`,
+    options: {
+      method: "DELETE",
+      headers: {
+        Authorization: 'Bearer ' + token, 
+      }
+    }
+  }
+}
+
+export function PASSWORD_LOST_POST(body) {
+  return {
+    url: `${API_URL}/api/password/lost`,
+    options: {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    }
+  }
+}
+
+export function PASSWORD_RESET_POST(body) {
+  return {
+    url: `${API_URL}/api/password/reset`,
+    options: {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    }
+  }
+}
+
+export function STATS_GET(token) {
+  return {
+    url: `${API_URL}/api/stats`,
+    options: {
+      method: "GET",
+      headers: { Authorization: `Bearer ${token}` }
+    }
   }
 }
